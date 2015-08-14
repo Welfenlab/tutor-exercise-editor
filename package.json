@@ -1,6 +1,6 @@
 {
   "name": "@tutor/exercise-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The exercise editor for tutor.",
   "main": "lib/exercise_editor.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "markdown-it-math": "^2.0.1",
     "vinyl-source-stream": "^1.1.0"
   },
-  "repository": "github:Welfenlab/code-controls",
+  "repository": "git@github.com:Welfenlab/tutor-exercise-editor.git",
   "contributors" : [
     "Maximilian Klein <dasmaxl@gmail.com> (https://github.com/LittleHelicase)",
     "Maik Marschner (https://github.com/leMaik)",
