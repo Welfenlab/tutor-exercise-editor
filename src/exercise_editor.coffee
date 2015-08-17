@@ -1,7 +1,7 @@
 
 _ = require 'lodash'
 
-module.exports = (ko, config) ->
+module.exports = (ko) ->
   if !ko.mapping?
     throw Error "You need to load knockout-mapping for the exercise editor."
   class TaskViewModel
@@ -11,8 +11,6 @@ module.exports = (ko, config) ->
       @hasTitle = ko.computed => @title()? and @title().trim() isnt ''
 
       @solution ?= ko.observable ''
-      @init = =>
-        config.taskInitialized @
 
   class ExercisePageViewModel
     constructor: (params) ->
@@ -21,7 +19,7 @@ module.exports = (ko, config) ->
       @exerciseNotFound = ko.observable(no)
       @isOld = ko.observable true
 
-      config.getExercise params.id, (exercise, status, error) =>
+      @getExercise params.id, (exercise, status, error) =>
         if exercise?
           @exercise = exercise
           @number exercise.number
@@ -39,14 +37,14 @@ module.exports = (ko, config) ->
 
     submit: (task) =>
       if task? #submit this task only
-
+        @saveTask task.id, ko.mapping.toJS(task), (status) ->
+          console.log 'Submit: ' + status
       else #submit everything
-        config.saveExercise exercise.id, ko.mapping.toJS(@tasks), (status) ->
+        @saveExercise exercise.id, ko.mapping.toJS(@tasks), (status) ->
           console.log 'Submit: ' + status
 
     # called through afterRender event in template html
     init: () =>
       $(".popupinfo").popup()
 
-  viewModel: ExercisePageViewModel
-  template: config.html
+  ExercisePageViewModel: ExercisePageViewModel
